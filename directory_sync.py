@@ -151,24 +151,17 @@ class App(object):
                 self.insert_node('', sourceItem, destinationPath)
                 return
             if os.path.isfile(sourcePath):
-                print (f"File :{destinationPath}")
-                print(f"source: {sourcePath}")
                 isIdentical = filecmp.cmp(sourcePath, destinationPath)
-                print(f"isIdentical: {isIdentical}")
                 if not isIdentical:
                     self.insert_node('', sourceItem, destinationPath)
             elif os.path.isdir(sourcePath):
                 self.RecursiveCheckDirectory(sourcePath, destinationPath)
             else:
-                print(f'Not a directory or file {destinationPath}')
                 self.insert_node('', sourceItem, destinationPath)
                     
     def OnDoubleClick(self, event):
         selected_item = self.tree.focus()
         selectedItemText = self.tree.item(selected_item, "text")
-        print(f"node: {self.tree.item(selected_item)}")
-        print(f"values: {self.tree.item(selected_item,'values')[0]}")
-
         selectedItemPath = selectedItemText
 
         selectedItem_Iid = item_iid = self.tree.selection()[0]
@@ -212,7 +205,7 @@ class App(object):
         # sync(target_path, source_path, 'sync') #for syncing the opposite way
 
     def SyncDirectory(self):
-        sync(self.sourceDirectory.get(), self.destinationDirectory.get(), "sync")
+        sync(self.sourceDirectory.get(), self.destinationDirectory.get(), "sync", verbose=True)
         self.CheckDirectory()
         
         # mtime, oldmtime = None, None
