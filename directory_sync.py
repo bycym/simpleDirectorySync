@@ -137,7 +137,7 @@ class App(object):
         self.nodes.clear()
         self.RecursiveCheckDirectory(self.sourceDirectory.get(), self.destinationDirectory.get())
         if not self.tree.get_children():
-            self.tree.insert(self.tree.get_children(), 'end', text="All of the synced", open=False)
+            self.tree.insert('', 'end', text="All of the synced", open=False)
             
 
 
@@ -148,7 +148,7 @@ class App(object):
             destinationPath = os.path.join(destinationDirectory, sourceItem)
             if not os.path.exists(destinationPath):
                 # print(f"File '{destinationPath}' doesn't exist in destination.")
-                self.insert_node(self.tree.get_children(), sourceItem, destinationPath)
+                self.insert_node('', sourceItem, destinationPath)
                 return
             if os.path.isfile(sourcePath):
                 print (f"File :{destinationPath}")
@@ -156,12 +156,12 @@ class App(object):
                 isIdentical = filecmp.cmp(sourcePath, destinationPath)
                 print(f"isIdentical: {isIdentical}")
                 if not isIdentical:
-                    self.insert_node(self.tree.get_children(), sourceItem, destinationPath)
+                    self.insert_node('', sourceItem, destinationPath)
             elif os.path.isdir(sourcePath):
                 self.RecursiveCheckDirectory(sourcePath, destinationPath)
             else:
                 print(f'Not a directory or file {destinationPath}')
-                self.insert_node(self.tree.get_children(), sourceItem, destinationPath)
+                self.insert_node('', sourceItem, destinationPath)
                     
     def OnDoubleClick(self, event):
         selected_item = self.tree.focus()
@@ -215,8 +215,9 @@ class App(object):
         sourceDirectory = os.listdir(self.sourceDirectory.get())
         destinationDirectory = os.listdir(self.destinationDirectory.get())
         print("return before sync")
-        return 
+        # return 
         sync(sourceDirectory, destinationDirectory, "sync")
+        self.CheckDirectory()
         
         # mtime, oldmtime = None, None
 
