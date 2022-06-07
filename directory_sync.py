@@ -212,11 +212,7 @@ class App(object):
         # sync(target_path, source_path, 'sync') #for syncing the opposite way
 
     def SyncDirectory(self):
-        sourceDirectory = os.listdir(self.sourceDirectory.get())
-        destinationDirectory = os.listdir(self.destinationDirectory.get())
-        print("return before sync")
-        # return 
-        sync(sourceDirectory, destinationDirectory, "sync")
+        sync(self.sourceDirectory.get(), self.destinationDirectory.get(), "sync")
         self.CheckDirectory()
         
         # mtime, oldmtime = None, None
